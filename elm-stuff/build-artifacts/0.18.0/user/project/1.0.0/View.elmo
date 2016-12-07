@@ -71,7 +71,7 @@ var _user$project$View$cell = F3(
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Events$onMouseDown(
-									_user$project$Update$UseTool(
+									_user$project$Update$UseToolSingle(
 										{ctor: '_Tuple2', _0: y, _1: x})),
 								_1: {ctor: '[]'}
 							}
@@ -180,7 +180,7 @@ var _user$project$View$toolbar = function (model) {
 						_elm_lang$html$Html$button,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('show-grid'),
+							_0: _elm_lang$html$Html_Attributes$class('show-grid fa fa-th'),
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleGrid),

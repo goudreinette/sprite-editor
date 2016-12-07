@@ -7,6 +7,7 @@ import Color exposing (Color, white)
 
 type Msg
   = UseTool Location
+  | UseToolSingle Location
   | SwitchTool Tool
   | ChangeColor Color
   | MouseDown Bool
@@ -16,6 +17,8 @@ update msg model =
   case msg of
     UseTool location ->
       { model | matrix = updateMatrix location model }
+    UseToolSingle location ->
+      { model | matrix = updateMatrix location { model | mousedown = True } }
     SwitchTool tool ->
       { model | tool = tool }
     ChangeColor color ->

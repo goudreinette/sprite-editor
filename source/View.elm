@@ -22,7 +22,7 @@ toolbar model =
   aside [class "toolbar"]
     [ tool Paint "paint-brush" model.tool
     , tool Erase "eraser" model.tool
-    , button [class "show-grid", onClick ToggleGrid] []
+    , button [class "show-grid fa fa-th", onClick ToggleGrid] []
     , input [type_ "color", class "color", onChangeColor ] []
     ]
 
@@ -44,7 +44,7 @@ cell y x color =
      , style [("background-color", color |> toRgb |> toCSS)]
      , onMouseEnter (UseTool (y, x))
      , onMouseOut (UseTool (y, x))
-     , onMouseDown (UseTool (y, x))
+     , onMouseDown (UseToolSingle (y, x))
      ]
      [ div [class "overlay"] []]
 

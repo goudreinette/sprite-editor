@@ -29,6 +29,17 @@ var _user$project$Update$update = F2(
 					{
 						matrix: A2(_user$project$Update$updateMatrix, _p1._0, model)
 					});
+			case 'UseToolSingle':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						matrix: A2(
+							_user$project$Update$updateMatrix,
+							_p1._0,
+							_elm_lang$core$Native_Utils.update(
+								model,
+								{mousedown: true}))
+					});
 			case 'SwitchTool':
 				return _elm_lang$core$Native_Utils.update(
 					model,
@@ -56,6 +67,9 @@ var _user$project$Update$ChangeColor = function (a) {
 };
 var _user$project$Update$SwitchTool = function (a) {
 	return {ctor: 'SwitchTool', _0: a};
+};
+var _user$project$Update$UseToolSingle = function (a) {
+	return {ctor: 'UseToolSingle', _0: a};
 };
 var _user$project$Update$UseTool = function (a) {
 	return {ctor: 'UseTool', _0: a};
