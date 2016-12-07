@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * Toolbar
+ */
+.toolbar {
+  height: 300px;
+  width: 100px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  background-color: rgb(42, 42, 42);
+  border-radius: 0px 5px 5px 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tool {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tool i {
+  color: white;
+  font-size: 20px;
+}
+
+.tool:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tool.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.color {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  bottom: -2px;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  border-radius: 5px;
+}
+
+
+/**
+ * Matrix
+ */
+.matrix {
+  width: 500px;
+  height: 500px;
+}
+
+.matrix.grid {
+  background-color: lightgrey;
+}
+
+.matrix tr {
+}
+
+.matrix .pixel {
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  user-drag: none;
+  user-select: none;
+  cursor: crosshair;
+}
+
+.matrix .pixel .overlay {
+  width: 100%;
+  height: 100%;
+}
+
+.matrix .pixel .overlay:hover {
+  background-color: grey;
+  opacity: 0.1;
+}

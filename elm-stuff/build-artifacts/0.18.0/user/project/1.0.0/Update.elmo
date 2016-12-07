@@ -1,0 +1,62 @@
+var _user$project$Update$updateMatrix = F2(
+	function (location, model) {
+		if (model.mousedown) {
+			var _p0 = model.tool;
+			if (_p0.ctor === 'Paint') {
+				return A3(
+					_chendrix$elm_matrix$Matrix$update,
+					location,
+					_elm_lang$core$Basics$always(model.color),
+					model.matrix);
+			} else {
+				return A3(
+					_chendrix$elm_matrix$Matrix$update,
+					location,
+					_elm_lang$core$Basics$always(_elm_lang$core$Color$white),
+					model.matrix);
+			}
+		} else {
+			return model.matrix;
+		}
+	});
+var _user$project$Update$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'UseTool':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						matrix: A2(_user$project$Update$updateMatrix, _p1._0, model)
+					});
+			case 'SwitchTool':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{tool: _p1._0});
+			case 'ChangeColor':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{color: _p1._0});
+			case 'MouseDown':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{mousedown: _p1._0});
+			default:
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{showGrid: !model.showGrid});
+		}
+	});
+var _user$project$Update$ToggleGrid = {ctor: 'ToggleGrid'};
+var _user$project$Update$MouseDown = function (a) {
+	return {ctor: 'MouseDown', _0: a};
+};
+var _user$project$Update$ChangeColor = function (a) {
+	return {ctor: 'ChangeColor', _0: a};
+};
+var _user$project$Update$SwitchTool = function (a) {
+	return {ctor: 'SwitchTool', _0: a};
+};
+var _user$project$Update$UseTool = function (a) {
+	return {ctor: 'UseTool', _0: a};
+};

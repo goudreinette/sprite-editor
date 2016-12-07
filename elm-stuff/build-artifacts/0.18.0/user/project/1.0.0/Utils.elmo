@@ -1,0 +1,30 @@
+var _user$project$Utils$zeroCode = _elm_lang$core$Char$toCode(
+	_elm_lang$core$Native_Utils.chr('0'));
+var _user$project$Utils$aCode = _elm_lang$core$Char$toCode(
+	_elm_lang$core$Native_Utils.chr('a'));
+var _user$project$Utils$charToInt = function ($char) {
+	return _elm_lang$core$Char$isDigit($char) ? (_elm_lang$core$Char$toCode($char) - _user$project$Utils$zeroCode) : (_elm_lang$core$Char$isHexDigit($char) ? ((_elm_lang$core$Char$toCode($char) - _user$project$Utils$aCode) + 10) : 0);
+};
+var _user$project$Utils$toLowerChar = function (str) {
+	var _p0 = _elm_lang$core$String$uncons(str);
+	if (_p0.ctor === 'Just') {
+		return _elm_lang$core$Char$toLower(_p0._0._0);
+	} else {
+		return _elm_lang$core$Native_Utils.chr('0');
+	}
+};
+var _user$project$Utils$toNumber = function (_p1) {
+	return _user$project$Utils$charToInt(
+		_user$project$Utils$toLowerChar(_p1));
+};
+var _user$project$Utils$hexToColor = function (rgb) {
+	var _p2 = A2(_elm_lang$core$String$split, '', rgb);
+	if ((((((((_p2.ctor === '::') && (_p2._1.ctor === '::')) && (_p2._1._1.ctor === '::')) && (_p2._1._1._1.ctor === '::')) && (_p2._1._1._1._1.ctor === '::')) && (_p2._1._1._1._1._1.ctor === '::')) && (_p2._1._1._1._1._1._1.ctor === '::')) && (_p2._1._1._1._1._1._1._1.ctor === '[]')) {
+		var b = (_user$project$Utils$toNumber(_p2._1._1._1._1._1._0) * 16) + _user$project$Utils$toNumber(_p2._1._1._1._1._1._1._0);
+		var g = (_user$project$Utils$toNumber(_p2._1._1._1._0) * 16) + _user$project$Utils$toNumber(_p2._1._1._1._1._0);
+		var r = (_user$project$Utils$toNumber(_p2._1._0) * 16) + _user$project$Utils$toNumber(_p2._1._1._0);
+		return A3(_elm_lang$core$Color$rgb, r, g, b);
+	} else {
+		return _elm_lang$core$Color$red;
+	}
+};

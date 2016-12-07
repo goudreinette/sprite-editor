@@ -1,0 +1,267 @@
+var _user$project$View$onChangeColor = _elm_lang$html$Html_Events$onInput(
+	function (_p0) {
+		return _user$project$Update$ChangeColor(
+			_user$project$Utils$hexToColor(_p0));
+	});
+var _user$project$View$activeClass = F2(
+	function (item, current) {
+		return _elm_lang$core$Native_Utils.eq(item, current) ? ' active' : '';
+	});
+var _user$project$View$gridClass = function (showGrid) {
+	return showGrid ? 'grid' : '';
+};
+var _user$project$View$toCSS = function (color) {
+	var a = _elm_lang$core$Basics$toString(color.alpha);
+	var b = _elm_lang$core$Basics$toString(color.blue);
+	var g = _elm_lang$core$Basics$toString(color.green);
+	var r = _elm_lang$core$Basics$toString(color.red);
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'rgba(',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			r,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				',',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					g,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						',',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							b,
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								',',
+								A2(_elm_lang$core$Basics_ops['++'], a, ')'))))))));
+};
+var _user$project$View$cell = F3(
+	function (y, x, color) {
+		return A2(
+			_elm_lang$html$Html$td,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pixel'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'background-color',
+								_1: _user$project$View$toCSS(
+									_elm_lang$core$Color$toRgb(color))
+							},
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onMouseEnter(
+							_user$project$Update$UseTool(
+								{ctor: '_Tuple2', _0: y, _1: x})),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onMouseOut(
+								_user$project$Update$UseTool(
+									{ctor: '_Tuple2', _0: y, _1: x})),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onMouseDown(
+									_user$project$Update$UseTool(
+										{ctor: '_Tuple2', _0: y, _1: x})),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('overlay'),
+						_1: {ctor: '[]'}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$View$row = F2(
+	function (y, cells) {
+		return A2(
+			_elm_lang$html$Html$tr,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$List$indexedMap,
+				_user$project$View$cell(y),
+				cells));
+	});
+var _user$project$View$matrix = F2(
+	function (showGrid, rows) {
+		return A2(
+			_elm_lang$html$Html$table,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'matrix ',
+						_user$project$View$gridClass(showGrid))),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onMouseDown(
+						_user$project$Update$MouseDown(true)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onMouseUp(
+							_user$project$Update$MouseDown(false)),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A2(_elm_lang$core$List$indexedMap, _user$project$View$row, rows));
+	});
+var _user$project$View$tool = F3(
+	function (tool, icon, current) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'tool',
+						A2(_user$project$View$activeClass, tool, current))),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(
+						_user$project$Update$SwitchTool(tool)),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A3(
+					_elm_lang$html$Html$node,
+					'i',
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class(
+							A2(_elm_lang$core$Basics_ops['++'], 'fa fa-', icon)),
+						_1: {ctor: '[]'}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$View$toolbar = function (model) {
+	return A2(
+		_elm_lang$html$Html$aside,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('toolbar'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A3(_user$project$View$tool, _user$project$Model$Paint, 'paint-brush', model.tool),
+			_1: {
+				ctor: '::',
+				_0: A3(_user$project$View$tool, _user$project$Model$Erase, 'eraser', model.tool),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('show-grid'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleGrid),
+								_1: {ctor: '[]'}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$type_('color'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('color'),
+									_1: {
+										ctor: '::',
+										_0: _user$project$View$onChangeColor,
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
+var _user$project$View$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('container'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A3(
+				_elm_lang$html$Html$node,
+				'link',
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$href('../styles/style.css'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$rel('stylesheet'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A3(
+					_elm_lang$html$Html$node,
+					'link',
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$href('../styles/font-awesome.css'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$rel('stylesheet'),
+							_1: {ctor: '[]'}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$View$toolbar(model),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_user$project$View$matrix,
+							model.showGrid,
+							_chendrix$elm_matrix$Matrix$toList(model.matrix)),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
