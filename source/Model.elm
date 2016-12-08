@@ -24,6 +24,7 @@ initMatrix =
 type Tool
   = Paint
   | Erase
+  | Pipette
 
 type alias Model =
   { tool : Tool

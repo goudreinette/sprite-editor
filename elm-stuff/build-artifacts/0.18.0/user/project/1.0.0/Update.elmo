@@ -1,22 +1,40 @@
-var _user$project$Update$updateMatrix = F2(
+var _user$project$Update$useTool = F2(
 	function (location, model) {
-		if (model.mousedown) {
-			var _p0 = model.tool;
-			if (_p0.ctor === 'Paint') {
-				return A3(
-					_chendrix$elm_matrix$Matrix$update,
-					location,
-					_elm_lang$core$Basics$always(model.color),
-					model.matrix);
-			} else {
-				return A3(
-					_chendrix$elm_matrix$Matrix$update,
-					location,
-					_elm_lang$core$Basics$always(_elm_lang$core$Color$white),
-					model.matrix);
-			}
+		if (!model.mousedown) {
+			return model;
 		} else {
-			return model.matrix;
+			var _p0 = model.tool;
+			switch (_p0.ctor) {
+				case 'Paint':
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							matrix: A3(
+								_chendrix$elm_matrix$Matrix$update,
+								location,
+								_elm_lang$core$Basics$always(model.color),
+								model.matrix)
+						});
+				case 'Erase':
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							matrix: A3(
+								_chendrix$elm_matrix$Matrix$update,
+								location,
+								_elm_lang$core$Basics$always(_elm_lang$core$Color$white),
+								model.matrix)
+						});
+				default:
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							color: A2(
+								_elm_lang$core$Maybe$withDefault,
+								_elm_lang$core$Color$black,
+								A2(_chendrix$elm_matrix$Matrix$get, location, model.matrix))
+						});
+			}
 		}
 	});
 var _user$project$Update$update = F2(
@@ -24,22 +42,14 @@ var _user$project$Update$update = F2(
 		var _p1 = msg;
 		switch (_p1.ctor) {
 			case 'UseTool':
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						matrix: A2(_user$project$Update$updateMatrix, _p1._0, model)
-					});
+				return A2(_user$project$Update$useTool, _p1._0, model);
 			case 'UseToolSingle':
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						matrix: A2(
-							_user$project$Update$updateMatrix,
-							_p1._0,
-							_elm_lang$core$Native_Utils.update(
-								model,
-								{mousedown: true}))
-					});
+				return A2(
+					_user$project$Update$useTool,
+					_p1._0,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{mousedown: true}));
 			case 'SwitchTool':
 				return _elm_lang$core$Native_Utils.update(
 					model,

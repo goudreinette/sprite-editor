@@ -1,10 +1,10 @@
 module View exposing (..)
 
 import Model exposing (Model, Tool(..))
-import Matrix exposing (toList, map)
-import Color exposing (toRgb)
+import Matrix exposing (toList, rowCount, colCount)
+import Color exposing (toRgb, black)
+import Color.Convert exposing (colorToHex, hexToColor)
 import Update exposing (Msg(..))
-import Utils exposing (hexToColor)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -22,8 +22,9 @@ toolbar model =
   aside [class "toolbar"]
     [ tool Paint "paint-brush" model.tool
     , tool Erase "eraser" model.tool
+    , tool Pipette "crosshairs" model.tool
     , button [class "show-grid fa fa-th", onClick ToggleGrid] []
-    , input [type_ "color", class "color", onChangeColor ] []
+    , input [type_ "color", value (model.color |> colorToHex),  class "color", onChangeColor ] []
     ]
 
 tool tool icon current =
@@ -32,21 +33,23 @@ tool tool icon current =
 
 
 matrix showGrid rows =
-  table [class ("matrix " ++ gridClass showGrid), onMouseDown (MouseDown True), onMouseUp (MouseDown False)]
+  div [class ("matrix" ++ gridClass showGrid), onMouseDown (MouseDown True), onMouseUp (MouseDown False)]
     (List.indexedMap row rows)
 
 row y cells =
-  tr []
+  div [class "row"]
     (List.indexedMap (cell y) cells)
 
 cell y x color =
-  td [ class "pixel"
+  div [ class "cell"
      , style [("background-color", color |> toRgb |> toCSS)]
      , onMouseEnter (UseTool (y, x))
      , onMouseOut (UseTool (y, x))
      , onMouseDown (UseToolSingle (y, x))
      ]
      [ div [class "overlay"] []]
+
+
 
 
 -- Utils
@@ -57,13 +60,14 @@ toCSS color =
       a = color.alpha |> toString
   in "rgba(" ++ r ++ "," ++ g ++ "," ++ b ++ "," ++ a ++ ")"
 
-gridClass showGrid =
-  if showGrid then "grid" else ""
-
 
 activeClass item current =
   if item == current then " active" else ""
 
 
+gridClass show =
+  if show then " show-grid" else ""
+
+
 onChangeColor : Attribute Msg
-onChangeColor = onInput (hexToColor >> ChangeColor)
+onChangeColor = onInput ((hexToColor >> Maybe.withDefault black) >> ChangeColor)

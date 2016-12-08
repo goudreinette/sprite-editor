@@ -1,15 +1,18 @@
 var _user$project$View$onChangeColor = _elm_lang$html$Html_Events$onInput(
 	function (_p0) {
 		return _user$project$Update$ChangeColor(
-			_user$project$Utils$hexToColor(_p0));
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				_elm_lang$core$Color$black,
+				_eskimoblood$elm_color_extra$Color_Convert$hexToColor(_p0)));
 	});
+var _user$project$View$gridClass = function (show) {
+	return show ? ' show-grid' : '';
+};
 var _user$project$View$activeClass = F2(
 	function (item, current) {
 		return _elm_lang$core$Native_Utils.eq(item, current) ? ' active' : '';
 	});
-var _user$project$View$gridClass = function (showGrid) {
-	return showGrid ? 'grid' : '';
-};
 var _user$project$View$toCSS = function (color) {
 	var a = _elm_lang$core$Basics$toString(color.alpha);
 	var b = _elm_lang$core$Basics$toString(color.blue);
@@ -41,10 +44,10 @@ var _user$project$View$toCSS = function (color) {
 var _user$project$View$cell = F3(
 	function (y, x, color) {
 		return A2(
-			_elm_lang$html$Html$td,
+			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('pixel'),
+				_0: _elm_lang$html$Html_Attributes$class('cell'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
@@ -95,8 +98,12 @@ var _user$project$View$cell = F3(
 var _user$project$View$row = F2(
 	function (y, cells) {
 		return A2(
-			_elm_lang$html$Html$tr,
-			{ctor: '[]'},
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('row'),
+				_1: {ctor: '[]'}
+			},
 			A2(
 				_elm_lang$core$List$indexedMap,
 				_user$project$View$cell(y),
@@ -105,13 +112,13 @@ var _user$project$View$row = F2(
 var _user$project$View$matrix = F2(
 	function (showGrid, rows) {
 		return A2(
-			_elm_lang$html$Html$table,
+			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
 				_0: _elm_lang$html$Html_Attributes$class(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'matrix ',
+						'matrix',
 						_user$project$View$gridClass(showGrid))),
 				_1: {
 					ctor: '::',
@@ -176,37 +183,46 @@ var _user$project$View$toolbar = function (model) {
 				_0: A3(_user$project$View$tool, _user$project$Model$Erase, 'eraser', model.tool),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$button,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('show-grid fa fa-th'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleGrid),
-								_1: {ctor: '[]'}
-							}
-						},
-						{ctor: '[]'}),
+					_0: A3(_user$project$View$tool, _user$project$Model$Pipette, 'crosshairs', model.tool),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$input,
+							_elm_lang$html$Html$button,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$type_('color'),
+								_0: _elm_lang$html$Html_Attributes$class('show-grid fa fa-th'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('color'),
-									_1: {
-										ctor: '::',
-										_0: _user$project$View$onChangeColor,
-										_1: {ctor: '[]'}
-									}
+									_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleGrid),
+									_1: {ctor: '[]'}
 								}
 							},
 							{ctor: '[]'}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('color'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$value(
+											_eskimoblood$elm_color_extra$Color_Convert$colorToHex(model.color)),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('color'),
+											_1: {
+												ctor: '::',
+												_0: _user$project$View$onChangeColor,
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}

@@ -8,6 +8,7 @@ var _user$project$Model$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {tool: a, zoom: b, matrix: c, color: d, mousedown: e, showGrid: f};
 	});
+var _user$project$Model$Pipette = {ctor: 'Pipette'};
 var _user$project$Model$Erase = {ctor: 'Erase'};
 var _user$project$Model$Paint = {ctor: 'Paint'};
 var _user$project$Model$initModel = {tool: _user$project$Model$Paint, zoom: 1, matrix: _user$project$Model$initMatrix, color: _elm_lang$core$Color$black, mousedown: false, showGrid: true};

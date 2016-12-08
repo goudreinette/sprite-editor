@@ -2,7 +2,7 @@ module Update exposing (..)
 
 import Model exposing (Model, Tool(..), transparent)
 import Matrix exposing (Location, Matrix)
-import Color exposing (Color, white)
+import Color exposing (Color, white, black)
 
 
 type Msg
@@ -16,9 +16,9 @@ type Msg
 update msg model =
   case msg of
     UseTool location ->
-      { model | matrix = updateMatrix location model }
+      useTool location model
     UseToolSingle location ->
-      { model | matrix = updateMatrix location { model | mousedown = True } }
+      useTool location { model | mousedown = True }
     SwitchTool tool ->
       { model | tool = tool }
     ChangeColor color ->
@@ -28,12 +28,15 @@ update msg model =
     ToggleGrid ->
       { model | showGrid = not model.showGrid }
 
-updateMatrix location model =
-  if model.mousedown then
-    case model.tool of
+useTool location model =
+  if not model.mousedown
+    then model
+    else case model.tool of
       Paint ->
-        Matrix.update location (always model.color) model.matrix
+        {model | matrix = Matrix.update location (always model.color) model.matrix}
 
       Erase ->
-        Matrix.update location (always white) model.matrix
-  else model.matrix
+        {model | matrix = Matrix.update location (always white) model.matrix}
+
+      Pipette ->
+        {model | color = Matrix.get location model.matrix |> Maybe.withDefault black}
