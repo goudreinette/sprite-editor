@@ -12,6 +12,7 @@ type Msg
   | ChangeColor Color
   | MouseDown Bool
   | ToggleGrid
+  | ToggleSave
 
 update msg model =
   case msg of
@@ -27,6 +28,8 @@ update msg model =
       { model | mousedown = mousedown }
     ToggleGrid ->
       { model | showGrid = not model.showGrid }
+    ToggleSave ->
+      { model | showSave = not model.showSave }
 
 useTool location model =
   if not model.mousedown

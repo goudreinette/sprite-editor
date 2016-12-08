@@ -62,12 +62,17 @@ var _user$project$Update$update = F2(
 				return _elm_lang$core$Native_Utils.update(
 					model,
 					{mousedown: _p1._0});
-			default:
+			case 'ToggleGrid':
 				return _elm_lang$core$Native_Utils.update(
 					model,
 					{showGrid: !model.showGrid});
+			default:
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{showSave: !model.showSave});
 		}
 	});
+var _user$project$Update$ToggleSave = {ctor: 'ToggleSave'};
 var _user$project$Update$ToggleGrid = {ctor: 'ToggleGrid'};
 var _user$project$Update$MouseDown = function (a) {
 	return {ctor: 'MouseDown', _0: a};

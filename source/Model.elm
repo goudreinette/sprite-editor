@@ -12,6 +12,7 @@ initModel =
   , color = black
   , mousedown = False
   , showGrid = True
+  , showSave = False
   }
 
 
@@ -33,4 +34,5 @@ type alias Model =
   , color : Color
   , mousedown : Bool
   , showGrid : Bool
+  , showSave : Bool
   }

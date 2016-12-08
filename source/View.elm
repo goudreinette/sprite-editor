@@ -3,7 +3,7 @@ module View exposing (..)
 import Model exposing (Model, Tool(..))
 import Matrix exposing (toList, rowCount, colCount)
 import Color exposing (toRgb, black)
-import Color.Convert exposing (colorToHex, hexToColor)
+import Color.Convert exposing (colorToHex, hexToColor, colorToCssRgba)
 import Update exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -16,6 +16,7 @@ view model =
     , node "link" [href "../styles/font-awesome.css", rel "stylesheet"] []
     , toolbar model
     , matrix model.showGrid (model.matrix |> toList)
+    , modal "Save" model
     ]
 
 toolbar model =
@@ -24,6 +25,7 @@ toolbar model =
     , tool Erase "eraser" model.tool
     , tool Pipette "crosshairs" model.tool
     , button [class "show-grid fa fa-th", onClick ToggleGrid] []
+    , button [class "save fa fa-floppy-o", onClick ToggleSave] []
     , input [type_ "color", value (model.color |> colorToHex),  class "color", onChangeColor ] []
     ]
 
@@ -42,28 +44,26 @@ row y cells =
 
 cell y x color =
   div [ class "cell"
-     , style [("background-color", color |> toRgb |> toCSS)]
+     , style [("background-color", colorToCssRgba color)]
      , onMouseEnter (UseTool (y, x))
      , onMouseOut (UseTool (y, x))
      , onMouseDown (UseToolSingle (y, x))
      ]
      [ div [class "overlay"] []]
 
+modal text model =
+  div [class ("overlay" ++ activeClass model.showSave True)]
+    [div [class "modal"]
+      [ button [class "close fa fa-times", onClick ToggleSave] []
+
+      ]
+    ]
 
 
 
 -- Utils
-toCSS color =
-  let r = color.red |> toString
-      g = color.green |> toString
-      b = color.blue |> toString
-      a = color.alpha |> toString
-  in "rgba(" ++ r ++ "," ++ g ++ "," ++ b ++ "," ++ a ++ ")"
-
-
 activeClass item current =
   if item == current then " active" else ""
-
 
 gridClass show =
   if show then " show-grid" else ""

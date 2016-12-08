@@ -13,34 +13,47 @@ var _user$project$View$activeClass = F2(
 	function (item, current) {
 		return _elm_lang$core$Native_Utils.eq(item, current) ? ' active' : '';
 	});
-var _user$project$View$toCSS = function (color) {
-	var a = _elm_lang$core$Basics$toString(color.alpha);
-	var b = _elm_lang$core$Basics$toString(color.blue);
-	var g = _elm_lang$core$Basics$toString(color.green);
-	var r = _elm_lang$core$Basics$toString(color.red);
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		'rgba(',
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			r,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				',',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					g,
+var _user$project$View$modal = F2(
+	function (text, model) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						',',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							b,
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								',',
-								A2(_elm_lang$core$Basics_ops['++'], a, ')'))))))));
-};
+						'overlay',
+						A2(_user$project$View$activeClass, model.showSave, true))),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('modal'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('close fa fa-times'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleSave),
+									_1: {ctor: '[]'}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
 var _user$project$View$cell = F3(
 	function (y, x, color) {
 		return A2(
@@ -56,8 +69,7 @@ var _user$project$View$cell = F3(
 							_0: {
 								ctor: '_Tuple2',
 								_0: 'background-color',
-								_1: _user$project$View$toCSS(
-									_elm_lang$core$Color$toRgb(color))
+								_1: _eskimoblood$elm_color_extra$Color_Convert$colorToCssRgba(color)
 							},
 							_1: {ctor: '[]'}
 						}),
@@ -201,27 +213,42 @@ var _user$project$View$toolbar = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$input,
+								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$type_('color'),
+									_0: _elm_lang$html$Html_Attributes$class('save fa fa-floppy-o'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$value(
-											_eskimoblood$elm_color_extra$Color_Convert$colorToHex(model.color)),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('color'),
-											_1: {
-												ctor: '::',
-												_0: _user$project$View$onChangeColor,
-												_1: {ctor: '[]'}
-											}
-										}
+										_0: _elm_lang$html$Html_Events$onClick(_user$project$Update$ToggleSave),
+										_1: {ctor: '[]'}
 									}
 								},
 								{ctor: '[]'}),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$input,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$type_('color'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(
+												_eskimoblood$elm_color_extra$Color_Convert$colorToHex(model.color)),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('color'),
+												_1: {
+													ctor: '::',
+													_0: _user$project$View$onChangeColor,
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									},
+									{ctor: '[]'}),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -275,7 +302,11 @@ var _user$project$View$view = function (model) {
 							_user$project$View$matrix,
 							model.showGrid,
 							_chendrix$elm_matrix$Matrix$toList(model.matrix)),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$View$modal, 'Save', model),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
